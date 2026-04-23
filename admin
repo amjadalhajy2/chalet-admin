@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوحة مدير الحجوزات</title>
+  <style>
+    :root {
+      --bg-top: #eef5ff;
+      --bg-mid: #f5f7fb;
+      --bg-btm: #eef2f8;
+      --glass: rgba(255, 255, 255, 0.56);
+      --glass-strong: rgba(255, 255, 255, 0.78);
+      --line: rgba(255, 255, 255, 0.36);
+      --line-strong: rgba(255, 255, 255, 0.54);
+      --text: #152033;
+      --muted: #5e6b82;
+      --tint-1: #6ea8ff;
+      --tint-2: #8b7dff;
+      --success: #19a765;
+      --warning: #f59e0b;
+      --danger: #f05d5e;
+      --shadow-xl: 0 30px 80px rgba(25, 43, 77, 0.14);
+      --shadow-lg: 0 18px 40px rgba(25, 43, 77, 0.10);
+      --radius-2xl: 30px;
+      --radius-xl: 24px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; overflow-x: hidden; }
+
+    body {
+      font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 12% 10%, rgba(110,168,255,0.24), transparent 22%),
+        radial-gradient(circle at 88% 14%, rgba(139,125,255,0.14), transparent 18%),
+        radial-gradient(circle at 50% 100%, rgba(184,211,255,0.26), transparent 30%),
+        linear-gradient(180deg, var(--bg-top) 0%, var(--bg-mid) 44%, var(--bg-btm) 100%);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.28), transparent 24%),
+        radial-gradient(circle at 80% 22%, rgba(255,255,255,0.18), transparent 18%);
+      z-index: 0;
+    }
+
+    .shell {
+      position: relative;
+      z-index: 1;
+      width: min(1320px, 100%);
+      margin: 0 auto;
+      padding: 20px 14px 34px;
+    }
+
+    .brand-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 8px 2px 18px;
+      flex-wrap: wrap;
+    }
+
+    .brand-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo-box {
+      width: 68px;
+      height: 68px;
+      flex-shrink: 0;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 22px;
+      border: 1px solid var(--line-strong);
+      background: linear-gradient(180deg, rgba(255,255,255,0.84), rgba(255,255,255,0.54));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.65), 0 10px 24px rgba(25,43,77,0.08);
+      backdrop-filter: blur(18px) saturate(1.2);
+      -webkit-backdrop-filter: blur(18px) saturate(1.2);
+    }
+
+    .logo-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .brand-copy h1 {
+      margin: 0 0 4px;
+      font-size: clamp(28px, 4vw, 40px);
+      line-height: 1.02;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+
+    .brand-copy p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.82), rgba(255,255,255,0.52));
+      border: 1px solid var(--line-strong);
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 800;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 8px 16px rgba(25,43,77,0.06);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.72), rgba(255,255,255,0.42));
+      border: 1px solid var(--line);
+      border-radius: var(--radius-2xl);
+      box-shadow: var(--shadow-xl);
+      backdrop-filter: blur(24px) saturate(1.2);
+      -webkit-backdrop-filter: blur(24px) saturate(1.2);
+    }
+
+    .card-pad { padding: 18px; }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .stat-box {
+      padding: 16px;
+      border-radius: 20px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.84), rgba(255,255,255,0.52));
+      border: 1px solid var(--line-strong);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 8px 18px rgba(25,43,77,0.05);
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    .stat-value {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.03em;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      color: var(--text);
+      font-size: 22px;
+      letter-spacing: -0.02em;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .filters {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .field-wrap { min-width: 0; }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--text);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    input,
+    select,
+    button {
+      width: 100%;
+      min-width: 0;
+      min-height: 46px;
+      padding: 12px 13px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.44);
+      background: linear-gradient(180deg, rgba(255,255,255,0.90), rgba(255,255,255,0.62));
+      color: var(--text);
+      outline: none;
+      font-size: 14px;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.72), 0 6px 14px rgba(25,43,77,0.04);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    input[type="date"] {
+      direction: ltr;
+      text-align: right;
+    }
+
+    .action-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .btn-primary {
+      color: #fff;
+      background: linear-gradient(135deg, #5f8cff, #8b7dff);
+      box-shadow: 0 16px 28px rgba(95,140,255,0.28);
+      border: none;
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    .btn-secondary {
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    .btn-success {
+      color: #fff;
+      background: linear-gradient(135deg, #19a765, #1f9d63);
+      border: none;
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    .btn-danger {
+      color: #fff;
+      background: linear-gradient(135deg, #f05d5e, #dc4f50);
+      border: none;
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    .btn-warning {
+      color: #fff;
+      background: linear-gradient(135deg, #f59e0b, #e58d00);
+      border: none;
+      cursor: pointer;
+      font-weight: 800;
+    }
+
+    .status-message {
+      display: none;
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid transparent;
+      font-size: 13px;
+      line-height: 1.7;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .status-message.success {
+      display: block;
+      background: rgba(25,167,101,0.12);
+      border-color: rgba(25,167,101,0.18);
+      color: #166534;
+    }
+
+    .status-message.error {
+      display: block;
+      background: rgba(240,93,94,0.12);
+      border-color: rgba(240,93,94,0.18);
+      color: #991b1b;
+    }
+
+    .booking-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .booking-card {
+      padding: 16px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.86), rgba(255,255,255,0.58));
+      border: 1px solid var(--line-strong);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 8px 18px rgba(25,43,77,0.05);
+    }
+
+    .booking-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .booking-head h3 {
+      margin: 0 0 4px;
+      font-size: 18px;
+      color: var(--text);
+    }
+
+    .booking-sub {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .badge.available {
+      background: rgba(25,167,101,0.14);
+      color: #166534;
+      border: 1px solid rgba(25,167,101,0.18);
+    }
+
+    .badge.pending {
+      background: rgba(245,158,11,0.14);
+      color: #9a6700;
+      border: 1px solid rgba(245,158,11,0.18);
+    }
+
+    .badge.booked {
+      background: rgba(240,93,94,0.14);
+      color: #991b1b;
+      border: 1px solid rgba(240,93,94,0.18);
+    }
+
+    .booking-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .meta-box {
+      padding: 12px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.56);
+      border: 1px solid rgba(255,255,255,0.34);
+    }
+
+    .meta-label {
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+
+    .meta-value {
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 700;
+      word-break: break-word;
+    }
+
+    .booking-actions {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .booking-actions button,
+    .booking-actions a {
+      min-height: 44px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      border-radius: 14px;
+      padding: 10px 12px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .wa-link {
+      color: #fff;
+      background: linear-gradient(135deg, #25d366, #1ebe5d);
+      box-shadow: 0 14px 26px rgba(37, 211, 102, 0.22);
+    }
+
+    .empty-state {
+      padding: 24px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.46);
+      border: 1px dashed rgba(255,255,255,0.54);
+    }
+
+    @media (min-width: 860px) {
+      .shell { padding: 24px 18px 36px; }
+      .top-layout {
+        display: grid;
+        grid-template-columns: 0.95fr 1.05fr;
+        gap: 14px;
+        align-items: start;
+        margin-bottom: 14px;
+      }
+      .stats-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+      .filters {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 560px) {
+      .shell { padding: 16px 10px 24px; }
+      .logo-box { width: 58px; height: 58px; border-radius: 18px; }
+      .brand-copy h1 { font-size: 24px; }
+      .brand-copy p { font-size: 12px; }
+      .card-pad, .calendar-card, .hero-main-card, .quick-card, .gallery-card { padding: 14px; }
+      .filters,
+      .stats-grid,
+      .action-row,
+      .booking-grid,
+      .booking-actions {
+        grid-template-columns: 1fr;
+      }
+      .status-pill { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <section class="brand-header">
+      <div class="brand-wrap">
+        <div class="logo-box">
+          <img src="logo.png" alt="شعار استراحاتنا الثلاث" onerror="this.style.display='none'; this.parentNode.innerHTML='🏡'">
+        </div>
+        <div class="brand-copy">
+          <h1>لوحة مدير الحجوزات</h1>
+          <p>إدارة الطلبات وتأكيد الحجوزات وتحديث الحالات.</p>
+        </div>
+      </div>
+      <div class="status-pill" id="connectionStatus">جاري تحميل البيانات...</div>
+    </section>
+
+    <section class="top-layout">
+      <div class="card card-pad">
+        <div class="section-head">
+          <h2>إحصائيات سريعة</h2>
+          <p>محدثة من Google Sheets.</p>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-box">
+            <div class="stat-label">إجمالي السجلات</div>
+            <div class="stat-value" id="totalCount">0</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">متاح</div>
+            <div class="stat-value" id="availableCount">0</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">بانتظار التأكيد</div>
+            <div class="stat-value" id="pendingCount">0</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-label">محجوز</div>
+            <div class="stat-value" id="bookedCount">0</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-pad">
+        <div class="section-head">
+          <h2>تصفية وبحث</h2>
+          <p>حسب التاريخ والاستراحة والحالة.</p>
+        </div>
+        <div class="filters">
+          <div class="field-wrap">
+            <label for="filterDate">التاريخ</label>
+            <input type="date" id="filterDate" />
+          </div>
+          <div class="field-wrap">
+            <label for="filterResort">الاستراحة</label>
+            <select id="filterResort">
+              <option value="">الكل</option>
+              <option value="استراحة النخيل">استراحة النخيل</option>
+              <option value="استراحة الوادي">استراحة الوادي</option>
+              <option value="استراحة الريف">استراحة الريف</option>
+            </select>
+          </div>
+          <div class="field-wrap">
+            <label for="filterStatus">الحالة</label>
+            <select id="filterStatus">
+              <option value="">الكل</option>
+              <option value="متاح">متاح</option>
+              <option value="بانتظار التأكيد">بانتظار التأكيد</option>
+              <option value="محجوز">محجوز</option>
+            </select>
+          </div>
+          <div class="field-wrap">
+            <label for="searchInput">بحث</label>
+            <input type="text" id="searchInput" placeholder="الاسم أو الجوال أو الملاحظات" />
+          </div>
+        </div>
+        <div class="action-row" style="margin-top: 10px;">
+          <button class="btn-primary" id="refreshBtn" type="button">تحديث البيانات</button>
+          <button class="btn-secondary" id="resetFiltersBtn" type="button">إعادة ضبط الفلاتر</button>
+        </div>
+        <div class="status-message" id="statusMessage"></div>
+      </div>
+    </section>
+
+    <section class="card card-pad">
+      <div class="section-head">
+        <h2>قائمة الحجوزات</h2>
+        <p id="resultsSummary">جاري التحميل...</p>
+      </div>
+      <div class="booking-list" id="bookingList"></div>
+    </section>
+  </div>
+
+  <script>
+    const API_URL = 'https://script.google.com/macros/s/AKfycbyHpPNiodZ08gv0DHHKeIzCVABAmC0tMb3Otxds4jBn09D3Vdb5ssBcfIyUDQ7G-iVARA/exec';
+
+    const connectionStatus = document.getElementById('connectionStatus');
+    const totalCount = document.getElementById('totalCount');
+    const availableCount = document.getElementById('availableCount');
+    const pendingCount = document.getElementById('pendingCount');
+    const bookedCount = document.getElementById('bookedCount');
+    const filterDate = document.getElementById('filterDate');
+    const filterResort = document.getElementById('filterResort');
+    const filterStatus = document.getElementById('filterStatus');
+    const searchInput = document.getElementById('searchInput');
+    const refreshBtn = document.getElementById('refreshBtn');
+    const resetFiltersBtn = document.getElementById('resetFiltersBtn');
+    const bookingList = document.getElementById('bookingList');
+    const resultsSummary = document.getElementById('resultsSummary');
+    const statusMessage = document.getElementById('statusMessage');
+
+    let bookingData = [];
+
+    function normalizeDate(value) {
+      if (!value) return '';
+      if (typeof value === 'string') return value.trim().slice(0, 10);
+      const date = new Date(value);
+      if (isNaN(date.getTime())) return '';
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+
+    function showStatus(message, type) {
+      statusMessage.textContent = message;
+      statusMessage.className = `status-message ${type}`;
+    }
+
+    function clearStatus() {
+      statusMessage.textContent = '';
+      statusMessage.className = 'status-message';
+    }
+
+    function updateConnection(text) {
+      connectionStatus.textContent = text;
+    }
+
+    async function loadBookings() {
+      try {
+        updateConnection('جاري تحميل البيانات...');
+        clearStatus();
+
+        const res = await fetch(API_URL, {
+          method: 'GET',
+          cache: 'no-store'
+        });
+
+        const rawText = await res.text();
+        let json;
+
+        try {
+          json = JSON.parse(rawText);
+        } catch {
+          throw new Error('الرد من Apps Script ليس JSON صالحًا');
+        }
+
+        if (!json.success) {
+          throw new Error(json.message || 'تعذر تحميل البيانات');
+        }
+
+        bookingData = Array.isArray(json.data) ? json.data : [];
+        updateConnection('تم الاتصال بنجاح');
+        updateStats();
+        renderBookings();
+      } catch (error) {
+        console.error(error);
+        updateConnection('تعذر الاتصال بالخدمة');
+        showStatus(error.message || 'حدث خطأ أثناء تحميل البيانات', 'error');
+        bookingList.innerHTML = '<div class="empty-state">تعذر تحميل البيانات.</div>';
+      }
+    }
+
+    function updateStats() {
+      totalCount.textContent = bookingData.length;
+      availableCount.textContent = bookingData.filter(item => String(item['الحالة'] || '').trim() === 'متاح').length;
+      pendingCount.textContent = bookingData.filter(item => String(item['الحالة'] || '').trim() === 'بانتظار التأكيد').length;
+      bookedCount.textContent = bookingData.filter(item => String(item['الحالة'] || '').trim() === 'محجوز').length;
+    }
+
+    function getFilteredBookings() {
+      const dateValue = filterDate.value;
+      const resortValue = filterResort.value;
+      const statusValue = filterStatus.value;
+      const query = searchInput.value.trim().toLowerCase();
+
+      return bookingData.filter(item => {
+        const itemDate = normalizeDate(item['التاريخ']);
+        const itemResort = String(item['الاستراحة'] || '').trim();
+        const itemStatus = String(item['الحالة'] || '').trim();
+        const itemName = String(item['الاسم'] || '').trim().toLowerCase();
+        const itemPhone = String(item['الجوال'] || '').trim().toLowerCase();
+        const itemNotes = String(item['ملاحظات'] || '').trim().toLowerCase();
+
+        const matchDate = !dateValue || itemDate === dateValue;
+        const matchResort = !resortValue || itemResort === resortValue;
+        const matchStatus = !statusValue || itemStatus === statusValue;
+        const matchQuery = !query || itemName.includes(query) || itemPhone.includes(query) || itemNotes.includes(query);
+
+        return matchDate && matchResort && matchStatus && matchQuery;
+      }).sort((a, b) => {
+        const dateA = normalizeDate(a['التاريخ']);
+        const dateB = normalizeDate(b['التاريخ']);
+        return dateA.localeCompare(dateB);
+      });
+    }
+
+    function getStatusBadgeClass(status) {
+      if (status === 'متاح') return 'available';
+      if (status === 'بانتظار التأكيد') return 'pending';
+      return 'booked';
+    }
+
+    function normalizePhoneForWhatsApp(phone) {
+      let digits = String(phone || '').replace(/\D/g, '');
+      if (digits.startsWith('00')) digits = digits.slice(2);
+      return digits;
+    }
+
+    function getWhatsAppLink(item) {
+      const phone = normalizePhoneForWhatsApp(item['الجوال']);
+      if (!phone) return '';
+      const name = String(item['الاسم'] || '').trim();
+      const resort = String(item['الاستراحة'] || '').trim();
+      const date = normalizeDate(item['التاريخ']);
+      const text = encodeURIComponent(`السلام عليكم ${name || ''}، بخصوص طلب الحجز في ${resort} بتاريخ ${date}.`);
+      return `https://wa.me/${phone}?text=${text}`;
+    }
+
+    function renderBookings() {
+      const filtered = getFilteredBookings();
+      resultsSummary.textContent = `${filtered.length} سجل`;
+
+      if (!filtered.length) {
+        bookingList.innerHTML = '<div class="empty-state">لا توجد نتائج مطابقة للفلاتر الحالية.</div>';
+        return;
+      }
+
+      bookingList.innerHTML = filtered.map(item => {
+        const date = normalizeDate(item['التاريخ']);
+        const resort = String(item['الاستراحة'] || '').trim();
+        const status = String(item['الحالة'] || '').trim();
+        const bookingType = String(item['نوع الحجز'] || '').trim() || '-';
+        const name = String(item['الاسم'] || '').trim() || '-';
+        const phone = String(item['الجوال'] || '').trim() || '-';
+        const notes = String(item['ملاحظات'] || '').trim() || '-';
+        const badgeClass = getStatusBadgeClass(status);
+        const waLink = getWhatsAppLink(item);
+
+        return `
+          <article class="booking-card">
+            <div class="booking-head">
+              <div>
+                <h3>${resort}</h3>
+                <div class="booking-sub">التاريخ: ${date}</div>
+              </div>
+              <span class="badge ${badgeClass}">${status}</span>
+            </div>
+
+            <div class="booking-grid">
+              <div class="meta-box">
+                <div class="meta-label">نوع الحجز</div>
+                <div class="meta-value">${bookingType}</div>
+              </div>
+              <div class="meta-box">
+                <div class="meta-label">الاسم</div>
+                <div class="meta-value">${name}</div>
+              </div>
+              <div class="meta-box">
+                <div class="meta-label">الجوال</div>
+                <div class="meta-value">${phone}</div>
+              </div>
+              <div class="meta-box">
+                <div class="meta-label">الملاحظات</div>
+                <div class="meta-value">${notes}</div>
+              </div>
+            </div>
+
+            <div class="booking-actions">
+              <button class="btn-success" type="button" onclick="updateBookingStatus('${date}','${resort}','محجوز')">تأكيد الحجز</button>
+              <button class="btn-warning" type="button" onclick="updateBookingStatus('${date}','${resort}','بانتظار التأكيد')">بانتظار التأكيد</button>
+              <button class="btn-danger" type="button" onclick="updateBookingStatus('${date}','${resort}','متاح')">جعلها متاحة</button>
+              ${waLink ? `<a class="wa-link" href="${waLink}" target="_blank" rel="noopener noreferrer">واتساب العميل</a>` : '<span class="btn-secondary" style="display:inline-flex;align-items:center;justify-content:center;">لا يوجد واتساب</span>'}
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    async function updateBookingStatus(date, resort, status) {
+      try {
+        clearStatus();
+        showStatus('جاري تحديث الحالة...', 'success');
+
+        const res = await fetch(API_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain;charset=utf-8'
+          },
+          body: JSON.stringify({
+            action: 'updateStatus',
+            date,
+            resort,
+            status
+          })
+        });
+
+        const rawText = await res.text();
+        let json;
+
+        try {
+          json = JSON.parse(rawText);
+        } catch {
+          throw new Error('تعذر قراءة رد تحديث الحالة');
+        }
+
+        if (!json.success) {
+          throw new Error(json.message || 'تعذر تحديث الحالة');
+        }
+
+        showStatus('تم تحديث الحالة بنجاح.', 'success');
+        await loadBookings();
+      } catch (error) {
+        console.error(error);
+        showStatus(error.message || 'حدث خطأ أثناء تحديث الحالة', 'error');
+      }
+    }
+
+    function resetFilters() {
+      filterDate.value = '';
+      filterResort.value = '';
+      filterStatus.value = '';
+      searchInput.value = '';
+      renderBookings();
+    }
+
+    filterDate.addEventListener('input', renderBookings);
+    filterResort.addEventListener('change', renderBookings);
+    filterStatus.addEventListener('change', renderBookings);
+    searchInput.addEventListener('input', renderBookings);
+    refreshBtn.addEventListener('click', loadBookings);
+    resetFiltersBtn.addEventListener('click', resetFilters);
+
+    window.updateBookingStatus = updateBookingStatus;
+
+    loadBookings();
+  </script>
+</body>
+</html>

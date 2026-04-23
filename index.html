@@ -9,23 +9,18 @@
       --bg-top: #eef5ff;
       --bg-mid: #f5f7fb;
       --bg-btm: #eef2f8;
-      --glass: rgba(255, 255, 255, 0.56);
-      --glass-strong: rgba(255, 255, 255, 0.78);
       --line: rgba(255, 255, 255, 0.36);
       --line-strong: rgba(255, 255, 255, 0.54);
       --text: #152033;
       --muted: #5e6b82;
-      --tint-1: #6ea8ff;
-      --tint-2: #8b7dff;
       --success: #19a765;
-      --warning: #f59e0b;
       --danger: #f05d5e;
+      --warning: #f59e0b;
       --shadow-xl: 0 30px 80px rgba(25, 43, 77, 0.14);
-      --shadow-lg: 0 18px 40px rgba(25, 43, 77, 0.10);
-      --radius-2xl: 30px;
-      --radius-xl: 24px;
-      --radius-lg: 18px;
-      --radius-md: 14px;
+      --shadow-md: 0 10px 24px rgba(25, 43, 77, 0.08);
+      --radius-2xl: 34px;
+      --radius-xl: 28px;
+      --radius-lg: 20px;
     }
 
     * { box-sizing: border-box; }
@@ -58,7 +53,7 @@
     .shell {
       position: relative;
       z-index: 1;
-      width: min(1320px, 100%);
+      width: min(980px, 100%);
       margin: 0 auto;
       padding: 20px 14px 34px;
     }
@@ -66,16 +61,8 @@
     .brand-header {
       display: flex;
       align-items: center;
-      justify-content: space-between;
       gap: 14px;
-      padding: 8px 2px 18px;
-      flex-wrap: wrap;
-    }
-
-    .brand-wrap {
-      display: flex;
-      align-items: center;
-      gap: 14px;
+      padding: 8px 2px 20px;
     }
 
     .logo-box {
@@ -89,7 +76,7 @@
       border-radius: 22px;
       border: 1px solid var(--line-strong);
       background: linear-gradient(180deg, rgba(255,255,255,0.84), rgba(255,255,255,0.54));
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.65), 0 10px 24px rgba(25,43,77,0.08);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.65), var(--shadow-md);
       backdrop-filter: blur(18px) saturate(1.2);
       -webkit-backdrop-filter: blur(18px) saturate(1.2);
     }
@@ -116,198 +103,138 @@
       line-height: 1.7;
     }
 
-    .status-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.82), rgba(255,255,255,0.52));
-      border: 1px solid var(--line-strong);
-      color: var(--text);
-      font-size: 13px;
-      font-weight: 800;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 8px 16px rgba(25,43,77,0.06);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-    }
-
-    .grid {
+    .action-grid {
       display: grid;
+      grid-template-columns: 1fr;
       gap: 14px;
     }
 
-    .card {
-      background: linear-gradient(180deg, rgba(255,255,255,0.72), rgba(255,255,255,0.42));
+    .action-button {
+      width: 100%;
+      min-height: 118px;
+      padding: 22px 20px;
       border: 1px solid var(--line);
       border-radius: var(--radius-2xl);
+      background: linear-gradient(180deg, rgba(255,255,255,0.72), rgba(255,255,255,0.42));
       box-shadow: var(--shadow-xl);
       backdrop-filter: blur(24px) saturate(1.2);
       -webkit-backdrop-filter: blur(24px) saturate(1.2);
+      text-align: right;
+      cursor: pointer;
+      transition: transform .18s ease, box-shadow .18s ease;
     }
 
-    .card-pad { padding: 18px; }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
+    .action-button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 42px rgba(25, 43, 77, 0.12);
     }
 
-    .stat-box {
-      padding: 16px;
-      border-radius: 20px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.84), rgba(255,255,255,0.52));
-      border: 1px solid var(--line-strong);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 8px 18px rgba(25,43,77,0.05);
-    }
-
-    .stat-label {
-      color: var(--muted);
-      font-size: 13px;
-      margin-bottom: 6px;
-    }
-
-    .stat-value {
-      font-size: 28px;
+    .action-title {
+      font-size: 24px;
       font-weight: 800;
       color: var(--text);
-      letter-spacing: -0.03em;
+      margin-bottom: 6px;
+      letter-spacing: -0.02em;
     }
 
-    .section-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
+    .action-subtitle {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
       margin-bottom: 14px;
     }
 
-    .section-head h2 {
+    .count-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 52px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.86), rgba(255,255,255,0.58));
+      border: 1px solid var(--line-strong);
+      color: var(--text);
+      font-size: 18px;
+      font-weight: 800;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 8px 16px rgba(25,43,77,0.05);
+    }
+
+    .status-strip {
+      margin-top: 14px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.52);
+      border: 1px solid rgba(255,255,255,0.4);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 0;
+      background: rgba(18, 28, 46, 0.24);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .modal.active { display: flex; }
+
+    .modal-card {
+      width: 100%;
+      max-width: 860px;
+      max-height: 90vh;
+      overflow: auto;
+      padding: 18px 16px calc(20px + env(safe-area-inset-bottom));
+      border-radius: 28px 28px 0 0;
+      border: 1px solid var(--line-strong);
+      background: linear-gradient(180deg, rgba(255,255,255,0.88), rgba(255,255,255,0.68));
+      box-shadow: 0 -20px 42px rgba(25,43,77,0.16);
+      backdrop-filter: blur(26px) saturate(1.2);
+      -webkit-backdrop-filter: blur(26px) saturate(1.2);
+    }
+
+    .modal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .modal-head h2 {
       margin: 0;
       color: var(--text);
       font-size: 22px;
       letter-spacing: -0.02em;
     }
 
-    .section-head p {
-      margin: 0;
+    .modal-head p {
+      margin: 4px 0 0;
       color: var(--muted);
       font-size: 13px;
       line-height: 1.7;
     }
 
-    .filters {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .field-wrap { min-width: 0; }
-
-    label {
-      display: block;
-      margin-bottom: 5px;
+    .close-btn {
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      border: 1px solid var(--line-strong);
+      background: linear-gradient(180deg, rgba(255,255,255,0.88), rgba(255,255,255,0.58));
       color: var(--text);
-      font-size: 13px;
-      font-weight: 800;
-    }
-
-    input,
-    select,
-    button {
-      width: 100%;
-      min-width: 0;
-      min-height: 46px;
-      padding: 12px 13px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,0.44);
-      background: linear-gradient(180deg, rgba(255,255,255,0.90), rgba(255,255,255,0.62));
-      color: var(--text);
-      outline: none;
-      font-size: 14px;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,0.72), 0 6px 14px rgba(25,43,77,0.04);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-    }
-
-    input[type="date"] {
-      direction: ltr;
-      text-align: right;
-    }
-
-    .action-row {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-    }
-
-    .btn-primary {
-      color: #fff;
-      background: linear-gradient(135deg, #5f8cff, #8b7dff);
-      box-shadow: 0 16px 28px rgba(95,140,255,0.28);
-      border: none;
+      font-size: 20px;
       cursor: pointer;
-      font-weight: 800;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), 0 8px 18px rgba(25,43,77,0.05);
     }
 
-    .btn-secondary {
-      cursor: pointer;
-      font-weight: 800;
-    }
-
-    .btn-success {
-      color: #fff;
-      background: linear-gradient(135deg, #19a765, #1f9d63);
-      border: none;
-      cursor: pointer;
-      font-weight: 800;
-    }
-
-    .btn-danger {
-      color: #fff;
-      background: linear-gradient(135deg, #f05d5e, #dc4f50);
-      border: none;
-      cursor: pointer;
-      font-weight: 800;
-    }
-
-    .btn-warning {
-      color: #fff;
-      background: linear-gradient(135deg, #f59e0b, #e58d00);
-      border: none;
-      cursor: pointer;
-      font-weight: 800;
-    }
-
-    .status-message {
-      display: none;
-      margin-top: 12px;
-      padding: 12px;
-      border-radius: 14px;
-      border: 1px solid transparent;
-      font-size: 13px;
-      line-height: 1.7;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-    }
-
-    .status-message.success {
-      display: block;
-      background: rgba(25,167,101,0.12);
-      border-color: rgba(25,167,101,0.18);
-      color: #166534;
-    }
-
-    .status-message.error {
-      display: block;
-      background: rgba(240,93,94,0.12);
-      border-color: rgba(240,93,94,0.18);
-      color: #991b1b;
-    }
-
-    .booking-list {
+    .list-wrap {
       display: grid;
       gap: 12px;
     }
@@ -351,12 +278,6 @@
       white-space: nowrap;
     }
 
-    .badge.available {
-      background: rgba(25,167,101,0.14);
-      color: #166534;
-      border: 1px solid rgba(25,167,101,0.18);
-    }
-
     .badge.pending {
       background: rgba(245,158,11,0.14);
       color: #9a6700;
@@ -398,13 +319,14 @@
 
     .booking-actions {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 8px;
     }
 
     .booking-actions button,
-    .booking-actions a {
-      min-height: 44px;
+    .booking-actions a,
+    .booking-actions div {
+      min-height: 46px;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
@@ -414,6 +336,15 @@
       padding: 10px 12px;
       font-size: 13px;
       font-weight: 800;
+      width: 100%;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-confirm {
+      color: #fff;
+      background: linear-gradient(135deg, #19a765, #1f9d63);
+      box-shadow: 0 14px 26px rgba(25, 167, 101, 0.22);
     }
 
     .wa-link {
@@ -422,8 +353,32 @@
       box-shadow: 0 14px 26px rgba(37, 211, 102, 0.22);
     }
 
+    .status-message {
+      display: none;
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid transparent;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .status-message.success {
+      display: block;
+      background: rgba(25,167,101,0.12);
+      border-color: rgba(25,167,101,0.18);
+      color: #166534;
+    }
+
+    .status-message.error {
+      display: block;
+      background: rgba(240,93,94,0.12);
+      border-color: rgba(240,93,94,0.18);
+      color: #991b1b;
+    }
+
     .empty-state {
-      padding: 24px;
+      padding: 26px 18px;
       text-align: center;
       color: var(--muted);
       font-size: 14px;
@@ -432,20 +387,9 @@
       border: 1px dashed rgba(255,255,255,0.54);
     }
 
-    @media (min-width: 860px) {
-      .shell { padding: 24px 18px 36px; }
-      .top-layout {
-        display: grid;
-        grid-template-columns: 0.95fr 1.05fr;
-        gap: 14px;
-        align-items: start;
-        margin-bottom: 14px;
-      }
-      .stats-grid {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-      }
-      .filters {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+    @media (min-width: 760px) {
+      .action-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
 
@@ -454,128 +398,79 @@
       .logo-box { width: 58px; height: 58px; border-radius: 18px; }
       .brand-copy h1 { font-size: 24px; }
       .brand-copy p { font-size: 12px; }
-      .card-pad, .calendar-card, .hero-main-card, .quick-card, .gallery-card { padding: 14px; }
-      .filters,
-      .stats-grid,
-      .action-row,
+      .action-title { font-size: 21px; }
+      .modal-card {
+        max-height: 88vh;
+        padding: 14px 12px calc(16px + env(safe-area-inset-bottom));
+      }
       .booking-grid,
       .booking-actions {
         grid-template-columns: 1fr;
       }
-      .status-pill { width: 100%; justify-content: center; }
     }
   </style>
 </head>
 <body>
   <div class="shell">
     <section class="brand-header">
-      <div class="brand-wrap">
-        <div class="logo-box">
-          <img src="logo.png" alt="شعار استراحاتنا الثلاث" onerror="this.style.display='none'; this.parentNode.innerHTML='🏡'">
-        </div>
-        <div class="brand-copy">
-          <h1>لوحة مدير الحجوزات</h1>
-          <p>إدارة الطلبات وتأكيد الحجوزات وتحديث الحالات.</p>
-        </div>
+      <div class="logo-box">
+        <img src="logo.png" alt="شعار استراحاتنا الثلاث" onerror="this.style.display='none'; this.parentNode.innerHTML='🏡'">
       </div>
-      <div class="status-pill" id="connectionStatus">جاري تحميل البيانات...</div>
-    </section>
-
-    <section class="top-layout">
-      <div class="card card-pad">
-        <div class="section-head">
-          <h2>إحصائيات سريعة</h2>
-          <p>محدثة من Google Sheets.</p>
-        </div>
-        <div class="stats-grid">
-          <div class="stat-box">
-            <div class="stat-label">إجمالي السجلات</div>
-            <div class="stat-value" id="totalCount">0</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-label">متاح</div>
-            <div class="stat-value" id="availableCount">0</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-label">بانتظار التأكيد</div>
-            <div class="stat-value" id="pendingCount">0</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-label">محجوز</div>
-            <div class="stat-value" id="bookedCount">0</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card card-pad">
-        <div class="section-head">
-          <h2>تصفية وبحث</h2>
-          <p>حسب التاريخ والاستراحة والحالة.</p>
-        </div>
-        <div class="filters">
-          <div class="field-wrap">
-            <label for="filterDate">التاريخ</label>
-            <input type="date" id="filterDate" />
-          </div>
-          <div class="field-wrap">
-            <label for="filterResort">الاستراحة</label>
-            <select id="filterResort">
-              <option value="">الكل</option>
-              <option value="استراحة النخيل">استراحة النخيل</option>
-              <option value="استراحة الوادي">استراحة الوادي</option>
-              <option value="استراحة الريف">استراحة الريف</option>
-            </select>
-          </div>
-          <div class="field-wrap">
-            <label for="filterStatus">الحالة</label>
-            <select id="filterStatus">
-              <option value="">الكل</option>
-              <option value="متاح">متاح</option>
-              <option value="بانتظار التأكيد">بانتظار التأكيد</option>
-              <option value="محجوز">محجوز</option>
-            </select>
-          </div>
-          <div class="field-wrap">
-            <label for="searchInput">بحث</label>
-            <input type="text" id="searchInput" placeholder="الاسم أو الجوال أو الملاحظات" />
-          </div>
-        </div>
-        <div class="action-row" style="margin-top: 10px;">
-          <button class="btn-primary" id="refreshBtn" type="button">تحديث البيانات</button>
-          <button class="btn-secondary" id="resetFiltersBtn" type="button">إعادة ضبط الفلاتر</button>
-        </div>
-        <div class="status-message" id="statusMessage"></div>
+      <div class="brand-copy">
+        <h1>لوحة مدير الحجوزات</h1>
+        <p>إدارة الطلبات الجديدة والمؤكدة فقط.</p>
       </div>
     </section>
 
-    <section class="card card-pad">
-      <div class="section-head">
-        <h2>قائمة الحجوزات</h2>
-        <p id="resultsSummary">جاري التحميل...</p>
-      </div>
-      <div class="booking-list" id="bookingList"></div>
+    <section class="action-grid">
+      <button class="action-button" id="pendingBtn" type="button">
+        <div class="action-title">طلبات حجز جديدة</div>
+        <div class="action-subtitle">طلبات بحالة بانتظار التأكيد.</div>
+        <div class="count-badge" id="pendingCount">0</div>
+      </button>
+
+      <button class="action-button" id="bookedBtn" type="button">
+        <div class="action-title">الحجوزات المؤكدة</div>
+        <div class="action-subtitle">الحجوزات التي حالتها محجوز.</div>
+        <div class="count-badge" id="bookedCount">0</div>
+      </button>
     </section>
+
+    <div class="status-strip" id="statusStrip">جاري تحميل البيانات...</div>
+  </div>
+
+  <div class="modal" id="listModal">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div>
+          <h2 id="modalTitle">القائمة</h2>
+          <p id="modalSubtitle">تفاصيل السجلات</p>
+        </div>
+        <button class="close-btn" id="closeModal" type="button">×</button>
+      </div>
+
+      <div class="status-message" id="statusMessage"></div>
+      <div class="list-wrap" id="listWrap"></div>
+    </div>
   </div>
 
   <script>
     const API_URL = 'https://script.google.com/macros/s/AKfycbyHpPNiodZ08gv0DHHKeIzCVABAmC0tMb3Otxds4jBn09D3Vdb5ssBcfIyUDQ7G-iVARA/exec';
 
-    const connectionStatus = document.getElementById('connectionStatus');
-    const totalCount = document.getElementById('totalCount');
-    const availableCount = document.getElementById('availableCount');
+    const statusStrip = document.getElementById('statusStrip');
+    const pendingBtn = document.getElementById('pendingBtn');
+    const bookedBtn = document.getElementById('bookedBtn');
     const pendingCount = document.getElementById('pendingCount');
     const bookedCount = document.getElementById('bookedCount');
-    const filterDate = document.getElementById('filterDate');
-    const filterResort = document.getElementById('filterResort');
-    const filterStatus = document.getElementById('filterStatus');
-    const searchInput = document.getElementById('searchInput');
-    const refreshBtn = document.getElementById('refreshBtn');
-    const resetFiltersBtn = document.getElementById('resetFiltersBtn');
-    const bookingList = document.getElementById('bookingList');
-    const resultsSummary = document.getElementById('resultsSummary');
+    const listModal = document.getElementById('listModal');
+    const closeModal = document.getElementById('closeModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalSubtitle = document.getElementById('modalSubtitle');
+    const listWrap = document.getElementById('listWrap');
     const statusMessage = document.getElementById('statusMessage');
 
     let bookingData = [];
+    let currentView = 'pending';
 
     function normalizeDate(value) {
       if (!value) return '';
@@ -585,12 +480,28 @@
       const year = date.getFullYear();
       const month = String(date.getMonth() + 1).padStart(2, '0');
       const day = String(date.getDate()).padStart(2, '0');
-      return `${year}-${month}-${day}`;
+      return year + '-' + month + '-' + day;
+    }
+
+    function normalizePhoneForWhatsApp(phone) {
+      let digits = String(phone || '').replace(/[^0-9]/g, '');
+      if (digits.indexOf('00') === 0) digits = digits.slice(2);
+      return digits;
+    }
+
+    function getWhatsAppLink(item) {
+      const phone = normalizePhoneForWhatsApp(item['الجوال']);
+      if (!phone) return '';
+      const name = String(item['الاسم'] || '').trim();
+      const resort = String(item['الاستراحة'] || '').trim();
+      const date = normalizeDate(item['التاريخ']);
+      const text = encodeURIComponent('السلام عليكم ' + (name || '') + '، بخصوص طلب الحجز في ' + resort + ' بتاريخ ' + date + '.');
+      return 'https://wa.me/' + phone + '?text=' + text;
     }
 
     function showStatus(message, type) {
       statusMessage.textContent = message;
-      statusMessage.className = `status-message ${type}`;
+      statusMessage.className = 'status-message ' + type;
     }
 
     function clearStatus() {
@@ -598,14 +509,9 @@
       statusMessage.className = 'status-message';
     }
 
-    function updateConnection(text) {
-      connectionStatus.textContent = text;
-    }
-
     async function loadBookings() {
       try {
-        updateConnection('جاري تحميل البيانات...');
-        clearStatus();
+        statusStrip.textContent = 'جاري تحميل البيانات...';
 
         const res = await fetch(API_URL, {
           method: 'GET',
@@ -617,7 +523,7 @@
 
         try {
           json = JSON.parse(rawText);
-        } catch {
+        } catch (e) {
           throw new Error('الرد من Apps Script ليس JSON صالحًا');
         }
 
@@ -626,83 +532,60 @@
         }
 
         bookingData = Array.isArray(json.data) ? json.data : [];
-        updateConnection('تم الاتصال بنجاح');
-        updateStats();
-        renderBookings();
+
+        const pending = bookingData.filter(function(item) {
+          return String(item['الحالة'] || '').trim() === 'بانتظار التأكيد';
+        });
+
+        const booked = bookingData.filter(function(item) {
+          return String(item['الحالة'] || '').trim() === 'محجوز';
+        });
+
+        pendingCount.textContent = String(pending.length);
+        bookedCount.textContent = String(booked.length);
+        statusStrip.textContent = 'تم تحديث البيانات بنجاح';
+
+        if (listModal.classList.contains('active')) {
+          renderCurrentView();
+        }
       } catch (error) {
         console.error(error);
-        updateConnection('تعذر الاتصال بالخدمة');
-        showStatus(error.message || 'حدث خطأ أثناء تحميل البيانات', 'error');
-        bookingList.innerHTML = '<div class="empty-state">تعذر تحميل البيانات.</div>';
+        statusStrip.textContent = 'تعذر تحميل البيانات';
+        if (listModal.classList.contains('active')) {
+          listWrap.innerHTML = '<div class="empty-state">تعذر تحميل البيانات.</div>';
+        }
       }
     }
 
-    function updateStats() {
-      totalCount.textContent = bookingData.length;
-      availableCount.textContent = bookingData.filter(item => String(item['الحالة'] || '').trim() === 'متاح').length;
-      pendingCount.textContent = bookingData.filter(item => String(item['الحالة'] || '').trim() === 'بانتظار التأكيد').length;
-      bookedCount.textContent = bookingData.filter(item => String(item['الحالة'] || '').trim() === 'محجوز').length;
-    }
+    function getItemsByView(view) {
+      const filtered = bookingData.filter(function(item) {
+        const status = String(item['الحالة'] || '').trim();
+        return view === 'pending' ? status === 'بانتظار التأكيد' : status === 'محجوز';
+      });
 
-    function getFilteredBookings() {
-      const dateValue = filterDate.value;
-      const resortValue = filterResort.value;
-      const statusValue = filterStatus.value;
-      const query = searchInput.value.trim().toLowerCase();
-
-      return bookingData.filter(item => {
-        const itemDate = normalizeDate(item['التاريخ']);
-        const itemResort = String(item['الاستراحة'] || '').trim();
-        const itemStatus = String(item['الحالة'] || '').trim();
-        const itemName = String(item['الاسم'] || '').trim().toLowerCase();
-        const itemPhone = String(item['الجوال'] || '').trim().toLowerCase();
-        const itemNotes = String(item['ملاحظات'] || '').trim().toLowerCase();
-
-        const matchDate = !dateValue || itemDate === dateValue;
-        const matchResort = !resortValue || itemResort === resortValue;
-        const matchStatus = !statusValue || itemStatus === statusValue;
-        const matchQuery = !query || itemName.includes(query) || itemPhone.includes(query) || itemNotes.includes(query);
-
-        return matchDate && matchResort && matchStatus && matchQuery;
-      }).sort((a, b) => {
-        const dateA = normalizeDate(a['التاريخ']);
-        const dateB = normalizeDate(b['التاريخ']);
-        return dateA.localeCompare(dateB);
+      return filtered.sort(function(a, b) {
+        return normalizeDate(a['التاريخ']).localeCompare(normalizeDate(b['التاريخ']));
       });
     }
 
-    function getStatusBadgeClass(status) {
-      if (status === 'متاح') return 'available';
-      if (status === 'بانتظار التأكيد') return 'pending';
-      return 'booked';
-    }
+    function renderCurrentView() {
+      clearStatus();
+      const items = getItemsByView(currentView);
 
-    function normalizePhoneForWhatsApp(phone) {
-      let digits = String(phone || '').replace(/\D/g, '');
-      if (digits.startsWith('00')) digits = digits.slice(2);
-      return digits;
-    }
+      if (currentView === 'pending') {
+        modalTitle.textContent = 'طلبات حجز جديدة';
+        modalSubtitle.textContent = 'قائمة الطلبات بحالة بانتظار التأكيد.';
+      } else {
+        modalTitle.textContent = 'الحجوزات المؤكدة';
+        modalSubtitle.textContent = 'قائمة الحجوزات بحالة محجوز.';
+      }
 
-    function getWhatsAppLink(item) {
-      const phone = normalizePhoneForWhatsApp(item['الجوال']);
-      if (!phone) return '';
-      const name = String(item['الاسم'] || '').trim();
-      const resort = String(item['الاستراحة'] || '').trim();
-      const date = normalizeDate(item['التاريخ']);
-      const text = encodeURIComponent(`السلام عليكم ${name || ''}، بخصوص طلب الحجز في ${resort} بتاريخ ${date}.`);
-      return `https://wa.me/${phone}?text=${text}`;
-    }
-
-    function renderBookings() {
-      const filtered = getFilteredBookings();
-      resultsSummary.textContent = `${filtered.length} سجل`;
-
-      if (!filtered.length) {
-        bookingList.innerHTML = '<div class="empty-state">لا توجد نتائج مطابقة للفلاتر الحالية.</div>';
+      if (!items.length) {
+        listWrap.innerHTML = '<div class="empty-state">لا توجد سجلات في هذه القائمة حاليًا.</div>';
         return;
       }
 
-      bookingList.innerHTML = filtered.map(item => {
+      listWrap.innerHTML = items.map(function(item) {
         const date = normalizeDate(item['التاريخ']);
         const resort = String(item['الاستراحة'] || '').trim();
         const status = String(item['الحالة'] || '').trim();
@@ -710,53 +593,56 @@
         const name = String(item['الاسم'] || '').trim() || '-';
         const phone = String(item['الجوال'] || '').trim() || '-';
         const notes = String(item['ملاحظات'] || '').trim() || '-';
-        const badgeClass = getStatusBadgeClass(status);
         const waLink = getWhatsAppLink(item);
+        const badgeClass = currentView === 'pending' ? 'pending' : 'booked';
 
-        return `
-          <article class="booking-card">
-            <div class="booking-head">
-              <div>
-                <h3>${resort}</h3>
-                <div class="booking-sub">التاريخ: ${date}</div>
-              </div>
-              <span class="badge ${badgeClass}">${status}</span>
-            </div>
+        let actionsHtml = '';
+        if (currentView === 'pending') {
+          actionsHtml += '<button class="btn-confirm" type="button" data-date="' + date + '" data-resort="' + resort + '">تأكيد الحجز</button>';
+        } else {
+          actionsHtml += '<div class="btn-confirm" style="opacity:.75;pointer-events:none;">تم التأكيد</div>';
+        }
 
-            <div class="booking-grid">
-              <div class="meta-box">
-                <div class="meta-label">نوع الحجز</div>
-                <div class="meta-value">${bookingType}</div>
-              </div>
-              <div class="meta-box">
-                <div class="meta-label">الاسم</div>
-                <div class="meta-value">${name}</div>
-              </div>
-              <div class="meta-box">
-                <div class="meta-label">الجوال</div>
-                <div class="meta-value">${phone}</div>
-              </div>
-              <div class="meta-box">
-                <div class="meta-label">الملاحظات</div>
-                <div class="meta-value">${notes}</div>
-              </div>
-            </div>
+        if (waLink) {
+          actionsHtml += '<a class="wa-link" href="' + waLink + '" target="_blank" rel="noopener noreferrer">واتساب العميل</a>';
+        } else {
+          actionsHtml += '<div class="wa-link" style="opacity:.75;pointer-events:none;">لا يوجد واتساب</div>';
+        }
 
-            <div class="booking-actions">
-              <button class="btn-success" type="button" onclick="updateBookingStatus('${date}','${resort}','محجوز')">تأكيد الحجز</button>
-              <button class="btn-warning" type="button" onclick="updateBookingStatus('${date}','${resort}','بانتظار التأكيد')">بانتظار التأكيد</button>
-              <button class="btn-danger" type="button" onclick="updateBookingStatus('${date}','${resort}','متاح')">جعلها متاحة</button>
-              ${waLink ? `<a class="wa-link" href="${waLink}" target="_blank" rel="noopener noreferrer">واتساب العميل</a>` : '<span class="btn-secondary" style="display:inline-flex;align-items:center;justify-content:center;">لا يوجد واتساب</span>'}
-            </div>
-          </article>
-        `;
+        return '' +
+          '<article class="booking-card">' +
+            '<div class="booking-head">' +
+              '<div>' +
+                '<h3>' + resort + '</h3>' +
+                '<div class="booking-sub">التاريخ: ' + date + '</div>' +
+              '</div>' +
+              '<span class="badge ' + badgeClass + '">' + status + '</span>' +
+            '</div>' +
+            '<div class="booking-grid">' +
+              '<div class="meta-box"><div class="meta-label">نوع الحجز</div><div class="meta-value">' + bookingType + '</div></div>' +
+              '<div class="meta-box"><div class="meta-label">الاسم</div><div class="meta-value">' + name + '</div></div>' +
+              '<div class="meta-box"><div class="meta-label">الجوال</div><div class="meta-value">' + phone + '</div></div>' +
+              '<div class="meta-box"><div class="meta-label">الملاحظات</div><div class="meta-value">' + notes + '</div></div>' +
+            '</div>' +
+            '<div class="booking-actions">' + actionsHtml + '</div>' +
+          '</article>';
       }).join('');
     }
 
-    async function updateBookingStatus(date, resort, status) {
+    function openList(view) {
+      currentView = view;
+      renderCurrentView();
+      listModal.classList.add('active');
+    }
+
+    function closeList() {
+      listModal.classList.remove('active');
+      clearStatus();
+    }
+
+    async function confirmBooking(date, resort) {
       try {
-        clearStatus();
-        showStatus('جاري تحديث الحالة...', 'success');
+        showStatus('جاري تأكيد الحجز...', 'success');
 
         const res = await fetch(API_URL, {
           method: 'POST',
@@ -765,9 +651,9 @@
           },
           body: JSON.stringify({
             action: 'updateStatus',
-            date,
-            resort,
-            status
+            date: date,
+            resort: resort,
+            status: 'محجوز'
           })
         });
 
@@ -776,7 +662,7 @@
 
         try {
           json = JSON.parse(rawText);
-        } catch {
+        } catch (e) {
           throw new Error('تعذر قراءة رد تحديث الحالة');
         }
 
@@ -784,30 +670,24 @@
           throw new Error(json.message || 'تعذر تحديث الحالة');
         }
 
-        showStatus('تم تحديث الحالة بنجاح.', 'success');
+        showStatus('تم تأكيد الحجز بنجاح.', 'success');
         await loadBookings();
+        renderCurrentView();
       } catch (error) {
         console.error(error);
-        showStatus(error.message || 'حدث خطأ أثناء تحديث الحالة', 'error');
+        showStatus(error.message || 'حدث خطأ أثناء تأكيد الحجز', 'error');
       }
     }
 
-    function resetFilters() {
-      filterDate.value = '';
-      filterResort.value = '';
-      filterStatus.value = '';
-      searchInput.value = '';
-      renderBookings();
-    }
-
-    filterDate.addEventListener('input', renderBookings);
-    filterResort.addEventListener('change', renderBookings);
-    filterStatus.addEventListener('change', renderBookings);
-    searchInput.addEventListener('input', renderBookings);
-    refreshBtn.addEventListener('click', loadBookings);
-    resetFiltersBtn.addEventListener('click', resetFilters);
-
-    window.updateBookingStatus = updateBookingStatus;
+    pendingBtn.addEventListener('click', function() { openList('pending'); });
+    bookedBtn.addEventListener('click', function() { openList('booked'); });
+    closeModal.addEventListener('click', closeList);
+    listModal.addEventListener('click', function(e) {
+      if (e.target === listModal) closeList();
+      if (e.target.matches('.btn-confirm[data-date][data-resort]')) {
+        confirmBooking(e.target.getAttribute('data-date'), e.target.getAttribute('data-resort'));
+      }
+    });
 
     loadBookings();
   </script>
